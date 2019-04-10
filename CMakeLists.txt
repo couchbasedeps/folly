@@ -233,6 +233,51 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   )
 endif()
 
+# We (Couchbase) don't use the libevent or OpenSSL bindings provided
+# by Folly, and they currently don't build on all of our platforms
+list(REMOVE_ITEM hfiles
+     ${FOLLY_DIR}/portability/OpenSSL.h
+     ${FOLLY_DIR}/ssl/SSLSession.h
+     ${FOLLY_DIR}/ssl/OpenSSLLockTypes.h
+     ${FOLLY_DIR}/ssl/OpenSSLCertUtils.h
+     ${FOLLY_DIR}/ssl/OpenSSLVersionFinder.h
+     ${FOLLY_DIR}/ssl/detail/OpenSSLThreading.h
+     ${FOLLY_DIR}/ssl/detail/SSLSessionImpl.h
+     ${FOLLY_DIR}/ssl/OpenSSLHash.h
+     ${FOLLY_DIR}/ssl/OpenSSLPtrTypes.h
+     ${FOLLY_DIR}/io/async/AsyncSSLSocket.h
+     ${FOLLY_DIR}/io/async/ssl/OpenSSLUtils.h
+     ${FOLLY_DIR}/io/async/ssl/SSLErrors.h
+     ${FOLLY_DIR}/io/async/SSLContext.h
+     ${FOLLY_DIR}/io/async/test/MockAsyncSSLSocket.h
+     ${FOLLY_DIR}/io/async/test/TestSSLServer.h
+     ${FOLLY_DIR}/io/async/test/AsyncSSLSocketTest.h
+     ${FOLLY_DIR}/io/async/SSLOptions.h)
+
+list(REMOVE_ITEM files
+     ${FOLLY_DIR}/portability/OpenSSL.cpp
+     ${FOLLY_DIR}/portability/test/OpenSSLPortabilityTest.cpp
+     ${FOLLY_DIR}/ssl/OpenSSLHash.cpp
+     ${FOLLY_DIR}/ssl/OpenSSLCertUtils.cpp
+     ${FOLLY_DIR}/ssl/test/OpenSSLHashTest.cpp
+     ${FOLLY_DIR}/ssl/test/OpenSSLCertUtilsTest.cpp
+     ${FOLLY_DIR}/ssl/detail/OpenSSLThreading.cpp
+     ${FOLLY_DIR}/ssl/detail/SSLSessionImpl.cpp
+     ${FOLLY_DIR}/io/async/SSLContext.cpp
+     ${FOLLY_DIR}/io/async/SSLOptions.cpp
+     ${FOLLY_DIR}/io/async/ssl/OpenSSLUtils.cpp
+     ${FOLLY_DIR}/io/async/ssl/test/SSLErrorsTest.cpp
+     ${FOLLY_DIR}/io/async/ssl/SSLErrors.cpp
+     ${FOLLY_DIR}/io/async/AsyncSSLSocket.cpp
+     ${FOLLY_DIR}/io/async/test/SSLSessionTest.cpp
+     ${FOLLY_DIR}/io/async/test/TestSSLServer.cpp
+     ${FOLLY_DIR}/io/async/test/AsyncSSLSocketTest2.cpp
+     ${FOLLY_DIR}/io/async/test/SSLContextTest.cpp
+     ${FOLLY_DIR}/io/async/test/AsyncSSLSocketWriteTest.cpp
+     ${FOLLY_DIR}/io/async/test/SSLContextInitializationTest.cpp
+     ${FOLLY_DIR}/io/async/test/AsyncSSLSocketTest.cpp
+     ${FOLLY_DIR}/io/async/test/SSLOptionsTest.cpp)
+
 add_library(folly_base OBJECT
   ${files} ${hfiles}
   ${CMAKE_CURRENT_BINARY_DIR}/folly/folly-config.h
