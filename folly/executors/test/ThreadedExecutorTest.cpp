@@ -39,7 +39,10 @@ TEST_F(ThreadedExecutorTest, example) {
   EXPECT_EQ("42", ret);
 }
 
-TEST_F(ThreadedExecutorTest, exception) {
+// MB-44253: Disabled - unhandled exceptions in tasks are no longer caught
+// (invokeCatchingExns is a no-op on this branch), so this test would
+// std::terminate.
+TEST_F(ThreadedExecutorTest, DISABLED_exception) {
   folly::ThreadedExecutor x;
   x.add([] { throw std::runtime_error("This should not crash the program"); });
 }
