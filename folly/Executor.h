@@ -231,7 +231,11 @@ class Executor {
 
   template <typename F>
   FOLLY_ERASE static void invokeCatchingExns(char const* p, F f) noexcept {
+#if 0
     catch_exception(f, invokeCatchingExnsLog, p);
+#else
+    f();
+#endif
   }
 
  protected:
