@@ -324,3 +324,7 @@ target_link_libraries(folly_deps INTERFACE
   ${FOLLY_SHINY_DEPENDENCIES}
   ${FOLLY_ASAN_FLAGS}
 )
+
+if (WIN32)
+    target_link_libraries(folly_deps INTERFACE Shlwapi.lib)
+endif()
