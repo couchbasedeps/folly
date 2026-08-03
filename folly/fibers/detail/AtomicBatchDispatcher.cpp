@@ -19,6 +19,7 @@
 #include <cassert>
 
 #include <fmt/core.h>
+#include <fmt/format.h>
 
 namespace folly {
 namespace fibers {
