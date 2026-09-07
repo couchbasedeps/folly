@@ -192,7 +192,10 @@ TYPED_TEST(SerialExecutorTest, RecursiveAddInline) {
   recursiveAddTest<TypeParam>(folly::InlineExecutor::instance());
 }
 
-TYPED_TEST(SerialExecutorTest, ExecutionThrows) {
+// MB-44253: Disabled - unhandled exceptions in tasks are no longer caught
+// (invokeCatchingExns is a no-op on this branch), so this test would
+// std::terminate.
+TYPED_TEST(SerialExecutorTest, DISABLED_ExecutionThrows) {
   auto executor = TypeParam::create();
 
   // an empty Func will throw std::bad_function_call when invoked,
